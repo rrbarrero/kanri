@@ -56,6 +56,12 @@
     >
       <button
         class="bg-elevation-2-hover transition-button rounded-md p-2"
+        @click="gitPull"
+      >
+        <ArrowDownIcon class="h-7 w-7" />
+      </button>
+      <button
+        class="bg-elevation-2-hover transition-button rounded-md p-2"
         @click="helpModalVisible = true"
       >
         <QuestionMarkCircleIcon class="h-7 w-7" />
@@ -71,14 +77,19 @@
 
 <script setup lang="ts">
 import emitter from "@/utils/emitter";
+import { invoke } from '@tauri-apps/api/tauri'
 
-import { Cog6ToothIcon, HomeIcon, PlusCircleIcon, QuestionMarkCircleIcon, ArrowUturnLeftIcon } from "@heroicons/vue/24/outline";
+import { Cog6ToothIcon, HomeIcon, PlusCircleIcon, QuestionMarkCircleIcon, ArrowUturnLeftIcon, ArrowDownIcon } from "@heroicons/vue/24/outline";
 
 const helpModalVisible = ref(false);
 const newBoardModalVisible = ref(false);
 
 const zIndexDown = ref(false);
 const showAddButton = ref(true);
+
+const gitPull = () => {
+    invoke('git_pull').then(e => console.log(e));
+}
 
 onMounted(() => {
     document.addEventListener("keydown", keyDownListener);
